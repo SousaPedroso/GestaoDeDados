@@ -1,2 +1,4 @@
 docker-volume/
 .env
+infra/open_metadata/custom-connector/data/
+infra/open_metadata/custom-connector/metadata/
