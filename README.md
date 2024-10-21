@@ -29,3 +29,12 @@ bash download_data.sh 2014 2023 2 # baixa todos bienalmente (a cada 2 anos)
 ```
 
 Para inicializar o projeto, considere em um novo terminal estar no diretório do [openmetadata](/infra/open_metadata/) e executar `make run`, e a fim de parar a aplicação `make stop`. Vale salientar que sob mudanças que impliquem na imagem, você deve rebuildar a imagem.
+
+Para facilitar na criação das DAGs, foi considerado o diretório [airflow](/infra/open_metadata/custom-connector/airflow/) com relação a sintaxe, pelo qual as DAGs junto com os requisitos são copiadas para a [imagem de ingestão](/infra/open_metadata/custom-connector/docker/Dockerfile). Considere no diretório do airflow, o comando abaixo para criar os arquivos você, para evitar criação como `root` pelo container.
+
+```sh
+mkdir -p ./dags ./logs ./plugins ./config
+echo -e "AIRFLOW_UID=$(id -u)" > .env
+```
+
+Além disso, está sendo usado o pyenv + poetry para gerenciar esse isolamento sem afetar outros projetos da máquina. O [setup.sh](/infra/open_metadata/custom-connector/airflow/setup.sh) faz as instalações necessárias. O [init_datawarehouse.sql](/infra/open_metadata/custom-connector/airflow/init_datawarehouse.sql) é quem faz a criação do schema e tabelas utilizados. Em uso de um posgres próprio, considere a utilização do código. Apesar da imagem usar o requirements.txt, não foi ali mapeado para caso queira fazer personalizações ainda com o poetry. Nesse caso, no diretório do airflow, `poetry add pacote`, e quando estiver satisfeito, gere o requirements.txt com `poetry export -o requirements.txt`. Vale salientar também que o datawarehouse está sendo simulado com o [render](https://render.com/), por isso não há especificidade local.
