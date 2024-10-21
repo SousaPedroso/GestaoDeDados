@@ -27,9 +27,14 @@ do
     mv $download_path/microdados_censo_da_educacao_superior_$ano_censo/Microdados\ do\ Censo\ da\ EducaЗ╞o\ Superior\ $ano_censo/leia-me/* $metadata_path/microdados_censo_da_educacao_superior_$ano_censo
     mv $download_path/microdados_censo_da_educacao_superior_$ano_censo/Microdados\ do\ Censo\ da\ EducaЗ╞o\ Superior\ $ano_censo/dados/* $download_path/microdados_censo_da_educacao_superior_$ano_censo
     rm -r $download_path/microdados_censo_da_educacao_superior_$ano_censo/Microdados\ do\ Censo\ da\ EducaЗ╞o\ Superior\ $ano_censo/
-    # Versões recentes estão em minúsculo
-    mv $download_path/microdados_censo_da_educacao_superior_$ano_censo/microdados\ do\ Censo\ da\ EducaЗ╞o\ Superior\ $ano_censo/Anexos/* $metadata_path/microdados_censo_da_educacao_superior_$ano_censo
-    mv $download_path/microdados_censo_da_educacao_superior_$ano_censo/microdados\ do\ Censo\ da\ EducaЗ╞o\ Superior\ $ano_censo/leia-me/* $metadata_path/microdados_censo_da_educacao_superior_$ano_censo
-    mv $download_path/microdados_censo_da_educacao_superior_$ano_censo/microdados\ do\ Censo\ da\ EducaЗ╞o\ Superior\ $ano_censo/dados/* $download_path/microdados_censo_da_educacao_superior_$ano_censo
-    rm -r $download_path/microdados_censo_da_educacao_superior_$ano_censo/microdados\ do\ Censo\ da\ EducaЗ╞o\ Superior\ $ano_censo/
+    # 2022
+    mv $download_path/microdados_censo_da_educacao_superior_$ano_censo/microdados_educaЗ╞o_superior_$ano_censo/Anexos/* $metadata_path/microdados_censo_da_educacao_superior_$ano_censo
+    mv $download_path/microdados_censo_da_educacao_superior_$ano_censo/microdados_educaЗ╞o_superior_$ano_censo/leia-me/* $metadata_path/microdados_censo_da_educacao_superior_$ano_censo
+    mv $download_path/microdados_censo_da_educacao_superior_$ano_censo/microdados_educaЗ╞o_superior_$ano_censo/dados/* $download_path/microdados_censo_da_educacao_superior_$ano_censo
+    rm -r $download_path/microdados_censo_da_educacao_superior_$ano_censo/microdados_educaЗ╞o_superior_$ano_censo/
+    # 2023
+    mv $download_path/microdados_censo_da_educacao_superior_$ano_censo/microdados_censo_da_educacao_superior_$ano_censo/Anexos/* $metadata_path/microdados_censo_da_educacao_superior_$ano_censo
+    mv $download_path/microdados_censo_da_educacao_superior_$ano_censo/microdados_censo_da_educacao_superior_$ano_censo/leia-me/* $metadata_path/microdados_censo_da_educacao_superior_$ano_censo
+    mv $download_path/microdados_censo_da_educacao_superior_$ano_censo/microdados_censo_da_educacao_superior_$ano_censo/dados/* $download_path/microdados_censo_da_educacao_superior_$ano_censo
+    rm -r $download_path/microdados_censo_da_educacao_superior_$ano_censo/microdados_censo_da_educacao_superior_$ano_censo/
 done
