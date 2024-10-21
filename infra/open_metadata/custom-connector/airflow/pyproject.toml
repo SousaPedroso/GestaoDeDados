@@ -9,6 +9,7 @@ readme = "README.md"
 python = "3.10.3"
 pandas = "^2.2.3"
 apache-airflow = "2.7.3"
+python-dotenv = "^1.0.1"
 
 
 [build-system]
