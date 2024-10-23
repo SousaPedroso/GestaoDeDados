@@ -4,7 +4,7 @@ infra/open_metadata/custom-connector/data/
 infra/open_metadata/custom-connector/metadata/
 requirements.txt
 *.pyc
-infra/open_metadata/custom-connector/airflow/data/
-infra/open_metadata/custom-connector/airflow/logs/
-infra/open_metadata/custom-connector/airflow/plugins/
-infra/open_metadata/custom-connector/airflow/output/
+infra/airflow/data/
+infra/airflow/logs/
+infra/airflow/plugins/
+infra/airflow/output/
