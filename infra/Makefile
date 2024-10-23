@@ -1,4 +1,4 @@
-COMPOSE_FILE ?= custom-connector/docker/docker-compose.yml
+COMPOSE_FILE ?= open_metadata/custom-connector/docker/docker-compose.yml
 
 run:
 	docker compose -f $(COMPOSE_FILE) up
