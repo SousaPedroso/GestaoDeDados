@@ -442,8 +442,8 @@ services:
   ingestion:
     container_name: openmetadata_ingestion
     build:
-      context: ../
-      dockerfile: docker/Dockerfile
+      context: ../../..
+      dockerfile: airflow/Dockerfile
     depends_on:
       elasticsearch:
         condition: service_started
