@@ -6,7 +6,7 @@ authors = ["SousaPedroso <contato.gabrieldesousagp@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "3.10.3"
+python = "3.10.13"
 pandas = "2.0.3"
 apache-airflow = "2.7.3"
 python-dotenv = "^1.0.1"

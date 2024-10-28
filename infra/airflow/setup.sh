@@ -6,8 +6,8 @@ export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 pyenv update
-pyenv install 3.10.3
-pyenv local 3.10.3
+pyenv install 3.10.13
+pyenv local 3.10.13
 pip install poetry
-poetry env use 3.10.3
+poetry env use 3.10.13
 poetry install --no-root
