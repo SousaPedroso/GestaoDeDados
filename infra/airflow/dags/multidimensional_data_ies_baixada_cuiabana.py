@@ -59,14 +59,17 @@ def multidimensional_data_ies_baixada_cuiabana():
                 microdado.split(".CSV")[0] for microdado in microdados_do_ano if microdado.endswith(".CSV")
             ]
 
-            print(microdados_por_ano)
             colunas_usadas_cursos = [
                 "CO_CURSO", "CO_REGIAO", "CO_UF", "CO_MUNICIPIO", "CO_IES", 
                 "TP_GRAU_ACADEMICO", "TP_MODALIDADE_ENSINO", "TP_NIVEL_ACADEMICO", 
                 "CO_CINE_ROTULO", "NO_CINE_ROTULO", "CO_CINE_AREA_GERAL", 
                 "CO_CINE_AREA_ESPECIFICA", "CO_CINE_AREA_DETALHADA", "NU_ANO_CENSO",
                 "NO_CINE_AREA_GERAL", "NO_CINE_AREA_ESPECIFICA", "NO_CINE_AREA_DETALHADA",
-                "DESCRICAO_GRAU", "DESCRICAO_MODALIDADE", "DESCRICAO_NIVEL"
+                "DESCRICAO_GRAU", "DESCRICAO_MODALIDADE", "DESCRICAO_NIVEL",
+                "QT_MAT", "QT_MAT_FEM", "QT_MAT_MASC", "QT_MAT_DIURNO", "QT_MAT_NOTURNO",
+                "QT_MAT_0_17", "QT_MAT_18_24", "QT_MAT_25_29", "QT_MAT_30_34", "QT_MAT_35_39",
+                "QT_MAT_40_49", "QT_MAT_50_59", "QT_MAT_60_MAIS", "QT_MAT_BRANCA", "QT_MAT_PRETA",
+                "QT_MAT_PARDA", "QT_MAT_AMARELA", "QT_MAT_INDIGENA", "QT_MAT_CORND"
             ]
             dados_cursos_ies = pd.read_csv(
                 os.path.join(
@@ -79,7 +82,7 @@ def multidimensional_data_ies_baixada_cuiabana():
             )
 
             for coluna in colunas_usadas_cursos:
-                if coluna not in dados_cursos_ies.columns:
+                if (coluna not in dados_cursos_ies.columns):
                     dados_cursos_ies[coluna] = None
 
 
@@ -216,7 +219,7 @@ def multidimensional_data_ies_baixada_cuiabana():
         de interesse
         """
         dados_cadastrais_ies_serie_historica = pd.read_csv(
-            "/opt/airflow/output/dados_cadastrais_ies_baixada_cuiabana.csv"
+            "/opt/airflow/output/dados_cadastrais_ies_baixada_cuiabana.csv",
         )
         dados_cursos_ies_serie_historica = pd.read_csv(
             "/opt/airflow/output/dados_cursos_ies_baixada_cuiabana.csv"
@@ -319,6 +322,14 @@ def multidimensional_data_ies_baixada_cuiabana():
             "TP_NIVEL_ACADEMICO", "DESCRICAO_NIVEL", "NU_ANO_CENSO"
         ]].drop_duplicates()
 
+        dimensao_matricula = dados_cursos_ies_serie_historica[[
+            "CO_IES", "CO_CURSO", "NU_ANO_CENSO", "QT_MAT", "QT_MAT_FEM", "QT_MAT_MASC", 
+            "QT_MAT_DIURNO", "QT_MAT_NOTURNO", "QT_MAT_0_17", "QT_MAT_18_24", 
+            "QT_MAT_25_29", "QT_MAT_30_34", "QT_MAT_35_39", "QT_MAT_40_49", 
+            "QT_MAT_50_59", "QT_MAT_60_MAIS", "QT_MAT_BRANCA", "QT_MAT_PRETA", 
+            "QT_MAT_PARDA", "QT_MAT_AMARELA", "QT_MAT_INDIGENA", "QT_MAT_CORND"
+        ]].drop_duplicates()
+
         # Salvar as dimensões para fazer a posterior carga com o postgres
         dimensao_ies.to_csv(
             "/opt/airflow/output/dim_ies.csv",
@@ -405,6 +416,13 @@ def multidimensional_data_ies_baixada_cuiabana():
             index=False
         )
 
+        dimensao_matricula.to_csv(
+            "/opt/airflow/output/fato_matricula_curso_ies.csv",
+            index=False
+        )
+
+        os.remove("/opt/airflow/output/dados_cadastrais_ies_baixada_cuiabana.csv")
+        os.remove("/opt/airflow/output/dados_cursos_ies_baixada_cuiabana.csv")
 
     @task()
     def load_data():
@@ -424,7 +442,6 @@ def multidimensional_data_ies_baixada_cuiabana():
         postgres_port = os.getenv("POSTGRES_PORT")
         postgres_db = os.getenv("POSTGRES_DB")
 
-        print(postgres_user, postgres_password, postgres_host, postgres_port, postgres_db)
         for table in os.listdir("/opt/airflow/output"):
             table_data = pd.read_csv(
                 f"/opt/airflow/output/{table}",
@@ -433,9 +450,9 @@ def multidimensional_data_ies_baixada_cuiabana():
 
             table_data.to_sql(
                 table.split('.')[0],
-                con=f"postgresql+psycopg2://{postgres_user}:{postgres_password}@{postgres_host}:{postgres_port}/{postgres_db}",
+                con=f"postgresql+psycopg2://{postgres_user}:{postgres_password}@{postgres_host}:{postgres_port}/{postgres_db}?client_encoding=utf8",
                 index=False,
-                if_exists="append",
+                if_exists="replace",
                 schema="inep"
             )
 
@@ -443,8 +460,6 @@ def multidimensional_data_ies_baixada_cuiabana():
     clean_intermediary_files = BashOperator(
         task_id="clean_intermediary_files",
         bash_command="""
-            rm /opt/airflow/output/dados_cadastrais_ies_baixada_cuiabana.csv \
-            /opt/airflow/output/dados_cursos_ies_baixada_cuiabana.csv && \
             rm -rf /opt/airflow/output/*
         """,
     )
