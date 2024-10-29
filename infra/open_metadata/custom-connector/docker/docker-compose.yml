@@ -461,6 +461,14 @@ services:
       DB_SCHEME: ${AIRFLOW_DB_SCHEME:-mysql+pymysql}
       DB_USER: ${AIRFLOW_DB_USER:-airflow_user}
       DB_PASSWORD: ${AIRFLOW_DB_PASSWORD:-airflow_pass}
+      # DAG multidimensional data ies's environment variables
+      # Statements here to not change DAG implementation when using for
+      # testing the DAG in local environment
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
       # extra connection-string properties for the database
       # EXAMPLE
       # require SSL (only for Postgres)

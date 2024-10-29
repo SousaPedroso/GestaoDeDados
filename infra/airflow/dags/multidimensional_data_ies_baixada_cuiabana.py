@@ -50,7 +50,7 @@ def multidimensional_data_ies_baixada_cuiabana():
         dados_cursos_ies_serie_historica = pd.DataFrame()
         dados_cadastrais_ies_serie_historica = pd.DataFrame()
 
-        microdados_path = "/opt/airflow/data"
+        microdados_path = "/opt/airflow/ingestion/data"
         for microdados_por_ano in os.listdir(microdados_path):
             microdados_do_ano = os.listdir(
                 os.path.join(microdados_path, microdados_por_ano)
