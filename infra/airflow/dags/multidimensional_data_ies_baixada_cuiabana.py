@@ -60,7 +60,8 @@ def multidimensional_data_ies_baixada_cuiabana():
             ]
 
             colunas_usadas_cursos = [
-                "CO_CURSO", "CO_REGIAO", "CO_UF", "CO_MUNICIPIO", "CO_IES", 
+                "CO_CURSO", "CO_REGIAO", "CO_UF", "CO_MUNICIPIO", "CO_IES", "IN_CAPITAL",
+                "SG_UF", "NO_UF", "CO_REGIAO", "NO_REGIAO", "NO_MUNICIPIO",
                 "TP_GRAU_ACADEMICO", "TP_MODALIDADE_ENSINO", "TP_NIVEL_ACADEMICO", 
                 "CO_CINE_ROTULO", "NO_CINE_ROTULO", "CO_CINE_AREA_GERAL", 
                 "CO_CINE_AREA_ESPECIFICA", "CO_CINE_AREA_DETALHADA", "NU_ANO_CENSO",
@@ -69,7 +70,17 @@ def multidimensional_data_ies_baixada_cuiabana():
                 "QT_MAT", "QT_MAT_FEM", "QT_MAT_MASC", "QT_MAT_DIURNO", "QT_MAT_NOTURNO",
                 "QT_MAT_0_17", "QT_MAT_18_24", "QT_MAT_25_29", "QT_MAT_30_34", "QT_MAT_35_39",
                 "QT_MAT_40_49", "QT_MAT_50_59", "QT_MAT_60_MAIS", "QT_MAT_BRANCA", "QT_MAT_PRETA",
-                "QT_MAT_PARDA", "QT_MAT_AMARELA", "QT_MAT_INDIGENA", "QT_MAT_CORND"
+                "QT_MAT_PARDA", "QT_MAT_AMARELA", "QT_MAT_INDIGENA", "QT_MAT_CORND",
+                "QT_ING_TOTAL", "QT_ING_FEM", "QT_ING_MASC", "QT_ING_DIURNO", 
+                "QT_ING_NOTURNO", "QT_ING_VESTIBULAR", "QT_ING_ENEM", 
+                "QT_ING_AVALIACAO_SERIADA", "QT_ING_SELECAO_SIMPLIFICA", "QT_ING_EGR", 
+                "QT_ING_OUTRO_TIPO_SELECAO", "QT_ING_PROC_SELETIVO", "QT_ING_VG_REMANESC", 
+                "QT_ING_VG_PROG_ESPECIAL", "QT_ING_OUTRA_FORMA", "QT_ING_0_17", 
+                "QT_ING_18_24", "QT_ING_25_29", "QT_ING_30_34", "QT_ING_35_39", 
+                "QT_ING_40_49", "QT_ING_50_59", "QT_ING_60_MAIS", "QT_ING_BRANCA", 
+                "QT_ING_PRETA", "QT_ING_PARDA", "QT_ING_AMARELA", "QT_ING_INDIGENA", 
+                "QT_ING_COR_ND", "QT_ING_BRA", "QT_ING_EST", "QT_ING_NAO_INFORMADO",
+                "QT_SIT_TRANCADA", "QT_SIT_DESVINCULADO", "QT_SIT_TRANSFERIDO", "QT_SIT_FALECIDO"
             ]
             dados_cursos_ies = pd.read_csv(
                 os.path.join(
@@ -110,6 +121,7 @@ def multidimensional_data_ies_baixada_cuiabana():
                 "QT_DOC_EX_COM_DEFICIENCIA", "NO_UF_IES", "SG_UF_IES", "NO_MESORREGIAO_IES", 
                 "NO_MICRORREGIAO_IES"
             ]
+
             if int(microdados_do_ano[0][len(microdados_do_ano[0])-4:]) < 2022:
                 dados_cadastrais_ies = pd.read_csv(
                     os.path.join(
@@ -193,6 +205,11 @@ def multidimensional_data_ies_baixada_cuiabana():
                     3: "Tecnológico",
                     4: "Bacharelado e Licenciatura",
                 }
+            )
+
+            dados_cursos_ies["CO_CAPITAL"] = dados_cursos_ies["IN_CAPITAL"]
+            dados_cursos_ies["IN_CAPITAL"] = dados_cursos_ies["IN_CAPITAL"].map(
+                {1: "Sim", 0: "Não"}
             )
 
             dados_cursos_ies_serie_historica = pd.concat(
@@ -330,6 +347,39 @@ def multidimensional_data_ies_baixada_cuiabana():
             "QT_MAT_PARDA", "QT_MAT_AMARELA", "QT_MAT_INDIGENA", "QT_MAT_CORND"
         ]].drop_duplicates()
 
+        dimensao_uf_curso_ies = dados_cursos_ies_serie_historica[[
+            "CO_UF", "SG_UF", "NO_UF", "CO_REGIAO", "NU_ANO_CENSO"
+        ]].drop_duplicates()
+
+        dimensao_regiao_cursos_ies = dados_cursos_ies_serie_historica[[
+            "CO_REGIAO", "NO_REGIAO", "NU_ANO_CENSO"
+        ]].drop_duplicates()
+
+        dimensao_municipio_curso_ies = dados_cursos_ies_serie_historica[[
+            "CO_MUNICIPIO", "NO_MUNICIPIO", "IN_CAPITAL", "CO_CAPITAL",
+            "NU_ANO_CENSO"
+        ]].drop_duplicates()
+
+        fato_ingressante = dados_cursos_ies_serie_historica[[
+        "CO_IES", "CO_CURSO", "QT_ING_TOTAL", "QT_ING_FEM", "QT_ING_MASC", 
+        "QT_ING_DIURNO", "QT_ING_NOTURNO", "QT_ING_VESTIBULAR", "QT_ING_ENEM", 
+        "QT_ING_AVALIACAO_SERIADA", "QT_ING_SELECAO_SIMPLIFICA", "QT_ING_EGR", 
+        "QT_ING_OUTRO_TIPO_SELECAO", "QT_ING_PROC_SELETIVO", "QT_ING_VG_REMANESC", 
+        "QT_ING_VG_PROG_ESPECIAL", "QT_ING_OUTRA_FORMA", "QT_ING_0_17", 
+        "QT_ING_18_24", "QT_ING_25_29", "QT_ING_30_34", "QT_ING_35_39", 
+        "QT_ING_40_49", "QT_ING_50_59", "QT_ING_60_MAIS", "QT_ING_BRANCA", 
+        "QT_ING_PRETA", "QT_ING_PARDA", "QT_ING_AMARELA", "QT_ING_INDIGENA", 
+        "QT_ING_COR_ND", "QT_ING_BRA", "QT_ING_EST", "QT_ING_NAO_INFORMADO", 
+        "NU_ANO_CENSO"
+        ]
+        ].drop_duplicates()
+
+        fato_situacao_estudante = dados_cursos_ies_serie_historica[[
+            "CO_IES", "CO_CURSO", "QT_SIT_TRANCADA", "QT_SIT_DESVINCULADO",
+            "QT_SIT_TRANSFERIDO", "QT_SIT_FALECIDO", "NU_ANO_CENSO"
+        ]
+        ].drop_duplicates()
+
         # Salvar as dimensões para fazer a posterior carga com o postgres
         dimensao_ies.to_csv(
             "/opt/airflow/output/dim_ies.csv",
@@ -419,6 +469,26 @@ def multidimensional_data_ies_baixada_cuiabana():
         dimensao_matricula.to_csv(
             "/opt/airflow/output/fato_matricula_curso_ies.csv",
             index=False
+        )
+
+        dimensao_uf_curso_ies.to_csv(
+            "/opt/airflow/output/dim_uf_curso_ies.csv"
+        )
+
+        dimensao_regiao_cursos_ies.to_csv(
+            "/opt/airflow/output/dim_regiao_curso_ies.csv"
+        )
+
+        dimensao_municipio_curso_ies.to_csv(
+            "/opt/airflow/output/dim_municipio_curso_ies.csv"
+        )
+
+        fato_ingressante.to_csv(
+            "/opt/airflow/output/fato_ingressante_curso_ies.csv"
+        )
+
+        fato_situacao_estudante.to_csv(
+            "/opt/airflow/output/fato_situacao_estudante.csv"
         )
 
         os.remove("/opt/airflow/output/dados_cadastrais_ies_baixada_cuiabana.csv")
