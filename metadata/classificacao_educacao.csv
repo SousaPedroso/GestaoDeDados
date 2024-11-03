@@ -1,0 +1,19 @@
+classification,tag,displayName,description
+TipoDeOrganizacaoAcademica,,,
+TipoDeOrganizacaoAcademica,Universidade,Universidade,"Em algum momento, foi uma faculdade ou centro universitário que aumentou a sua estrutura e cumpriu todos os requisitos estabelecidos pelo MEC. São instituições, públicas ou privadas, multidisciplinares e que se distinguem pela qualificação do corpo docente e excelência do ensino."
+TipoDeOrganizacaoAcademica,CentroUniversitario,Centro Universitário,"Maior que as faculdades e menor que as universidades. Estas instituições de ensino superior, públicas ou particulares, englobam uma ou mais áreas de conhecimento"
+TipoDeOrganizacaoAcademica,Faculdade,Faculdade,"São instituições de ensino superior, públicas ou privadas, focadas normalmente em uma área específica do conhecimento."
+TipoDeOrganizacaoAcademica,InstitutoFederalDeEducacaoCienciaETecnologia,"Instituto Federal de Educação, Ciência e Tecnologia                                ","Instituições de educação básica, profissional e superior publicas federais brasileiras"
+TipoDeOrganizacaoAcademica,CentroFederalDeEducacaoTecnologica,Centro Federal de Educação Tecnológica,Rede de institutos de ensino brasileiros pertencentes à esfera federal e diretamente ligados ao Ministério da Educação
+CategoriaAdministrativa,,,
+CategoriaAdministrativa,Publico,Público,"IES criada, mantida e administrada pelo Estado"
+CategoriaAdministrativa,Privada,Privada,"IES criada, mantida e administrada por pessoa física ou jurídica de direito privado"
+ApoioSocial,,,
+ApoioSocial,FIES,FIES,Alunos ingressantes que utilizam financiamento estudantil reembolsável do FIES.
+ApoioSocial,RPFIES,RPFIES,Alunos ingressantes que utilizam financiamento estudantil reembolsável administrado pela própria instituição.
+ApoioSocial,OutrosReembolsos,Outros Reembolsos,"Alunos ingressantes que utilizam financiamento estudantil reembolsável por governo estadual, municipal, ou entidades externas."
+ApoioSocial,NaoReembolsaveis,Não Reembolsáveis,Alunos ingressantes que utilizam financiamento estudantil não reembolsável.
+ApoioSocial,PROUNIIntegral,PROUNI Integral,Alunos ingressantes que utilizam financiamento estudantil não reembolsável integral do PROUNI.
+ApoioSocial,PROUNIParcial,PROUNI Parcial,Alunos ingressantes que utilizam financiamento estudantil não reembolsável parcial do PROUNI.
+ApoioSocial,NaoRPFIES,Não RPFIES,Alunos ingressantes que utilizam financiamento estudantil não reembolsável administrado pela instituição.
+ApoioSocial,OutrosNaoReembolsaveis,Outros Não Reembolsáveis,"Alunos ingressantes que utilizam financiamento estudantil não reembolsável por governo estadual, municipal, ou entidades externas."
