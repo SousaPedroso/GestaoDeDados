@@ -18,3 +18,4 @@ COPY airflow/config config
 
 WORKDIR /opt/airflow/ingestion
 COPY airflow/data data
+COPY airflow/schema_microdados_censo.csv schema_microdados_censo.csv
